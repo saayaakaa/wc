@@ -50,7 +50,7 @@ export default function RegisterPage() {
             <ArrowLeft className="w-6 h-6" />
           </Link>
           <h1 className="text-base font-bold text-center flex-1 pr-6">
-            お相手について教えてください<div className=""></div>
+            お見合いのお相手について教えてください
           </h1>
         </div>
       </header>

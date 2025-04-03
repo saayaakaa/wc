@@ -2,83 +2,47 @@
 
 import Link from "next/link"
 import { Home, User, ArrowLeft } from "lucide-react"
-import { useState } from "react"
+import UnlinkButton from "./components/UnlinkButton"
 
-interface Partner {
-  id: number
-  name: string
-  age: number
-  origin: string
-  hobby: string
-  restDay: string
-}
-
-export default function PartnerListPage() {
-  const [partners, setPartners] = useState<Partner[]>([
-    {
-      id: 1,
-      name: "あいさん",
-      age: 37,
-      origin: "東京都",
-      hobby: "読書、映画鑑賞",
-      restDay: "土曜日、日曜日"
-    },
-    {
-      id: 2,
-      name: "たなかさん",
-      age: 42,
-      origin: "神奈川県",
-      hobby: "料理、ガーデニング",
-      restDay: "水曜日、日曜日"
-    },
-    {
-      id: 3,
-      name: "すずきさん",
-      age: 28,
-      origin: "千葉県",
-      hobby: "ヨガ、旅行",
-      restDay: "月曜日、火曜日"
-    },
-    {
-      id: 4,
-      name: "さとうさん",
-      age: 45,
-      origin: "埼玉県",
-      hobby: "音楽鑑賞、散歩",
-      restDay: "木曜日、金曜日"
-    },
-    {
-      id: 5,
-      name: "やまださん",
-      age: 33,
-      origin: "大阪府",
-      hobby: "テニス、写真撮影",
-      restDay: "火曜日、水曜日"
-    },
-    {
-      id: 6,
-      name: "わたなべさん",
-      age: 39,
-      origin: "京都府",
-      hobby: "茶道、華道",
-      restDay: "日曜日、月曜日"
-    }
-  ])
-
-  // 削除確認用の状態
-  const [deleteTargetId, setDeleteTargetId] = useState<number | null>(null)
-
-  // 削除確認モーダルを表示
-  const showDeleteConfirm = (id: number) => {
-    setDeleteTargetId(id)
+const partners = [
+  {
+    id: 1,
+    name: "田中さん",
+    age: 35,
+    origin: "愛知県",
+    hobby: "カメラ、写真撮影",
+    restDay: "写真を撮りに出かけたり、カフェに行くことが多い\n映画鑑賞も好き"
+  },
+  {
+    id: 2,
+    name: "鈴木さん",
+    age: 42,
+    origin: "東京都",
+    hobby: "料理、ガーデニング",
+    restDay: "自宅で料理を作ったり、庭の手入れをしています"
+  },
+  {
+    id: 3,
+    name: "佐藤さん",
+    age: 38,
+    origin: "大阪府",
+    hobby: "ヨガ、読書",
+    restDay: "朝はヨガで体を動かし、午後は好きな本を読んでリラックスします\nたまに友達とカフェ巡りもします"
+  },
+  {
+    id: 4,
+    name: "山田さん",
+    age: 45,
+    origin: "福岡県",
+    hobby: "ゴルフ、ワイン",
+    restDay: "休日は早朝からゴルフに行くことが多いです\n夜は自宅でワインを楽しみながらゆっくり過ごします"
   }
+]
 
-  // 削除の実行
-  const handleDelete = () => {
-    if (deleteTargetId) {
-      setPartners(partners.filter(partner => partner.id !== deleteTargetId))
-      setDeleteTargetId(null)
-    }
+export default function ListPage() {
+  const handleUnlink = (partnerName: string) => {
+    // ここで解除処理を実装
+    console.log(`${partnerName}との会話を解除`)
   }
 
   return (
@@ -89,63 +53,47 @@ export default function PartnerListPage() {
           <Link href="/kaiwa/select" className="text-white">
             <ArrowLeft className="w-6 h-6" />
           </Link>
-          <h1 className="text-2xl font-bold text-center flex-1 pr-6">
-            お相手リスト
+          <h1 className="text-lg font-bold text-center flex-1 pr-6">
+            お相手一覧
           </h1>
         </div>
       </header>
 
       <main className="px-6 pb-40 flex-1">
-        {/* パートナーリスト */}
-        <div className="space-y-4 max-w-[430px] mx-auto">
+        <div className="max-w-[430px] mx-auto space-y-4">
           {partners.map((partner) => (
             <div
               key={partner.id}
               className="bg-white rounded-xl p-4 text-black"
             >
               <div className="flex justify-between items-start mb-2">
-                <h2 className="text-lg font-bold">
-                  {partner.name} ({partner.age})
-                </h2>
-                <button
-                  onClick={() => showDeleteConfirm(partner.id)}
-                  className="px-4 py-1.5 bg-[#F4A261] rounded-full text-white text-xs hover:bg-opacity-90 transition-colors whitespace-nowrap"
-                >
-                  リストから解除
-                </button>
+                <div>
+                  <h2 className="font-bold text-lg">{partner.name}</h2>
+                  <p className="text-sm text-gray-600">{partner.age}歳</p>
+                </div>
+                <UnlinkButton
+                  partnerName={partner.name}
+                  onUnlink={handleUnlink}
+                />
               </div>
-              <div className="space-y-1 text-sm">
-                <p>出身：{partner.origin}</p>
-                <p>趣味：{partner.hobby}</p>
-                <p>休日の過ごし方：{partner.restDay}</p>
+              <div className="space-y-2">
+                <p className="text-sm">
+                  <span className="font-medium">出身地：</span>
+                  {partner.origin}
+                </p>
+                <p className="text-sm">
+                  <span className="font-medium">趣味：</span>
+                  {partner.hobby}
+                </p>
+                <p className="text-sm">
+                  <span className="font-medium">休日の過ごし方：</span>
+                  {partner.restDay}
+                </p>
               </div>
             </div>
           ))}
         </div>
       </main>
-
-      {/* 削除確認オーバーレイ */}
-      {deleteTargetId && (
-        <div className="fixed inset-0 bg-black bg-opacity-30 z-50 flex items-center justify-center px-6">
-          <div className="bg-white rounded-2xl p-6 w-full max-w-[280px] text-center">
-            <p className="text-black text-lg mb-6">本当に解除しますか？</p>
-            <div className="space-y-3">
-              <button
-                onClick={handleDelete}
-                className="w-full py-3 bg-gray-100 border border-gray-300 rounded-full text-gray-800 text-base hover:bg-gray-200 transition-colors"
-              >
-                解除する
-              </button>
-              <button
-                onClick={() => setDeleteTargetId(null)}
-                className="w-full py-3 bg-[#F4A261] rounded-full text-white text-base hover:bg-opacity-90 transition-colors"
-              >
-                キャンセル
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* フッターナビゲーション */}
       <footer className="fixed bottom-0 left-0 right-0 bg-[#2C2C2C] py-4 border-t border-gray-700">

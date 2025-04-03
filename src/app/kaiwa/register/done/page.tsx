@@ -7,13 +7,21 @@ export default function RegisterDonePage() {
   return (
     <div className="min-h-screen bg-[#2C2C2C] text-white flex flex-col">
       <main className="flex-1 flex flex-col items-center justify-center px-6">
-        <h1 className="text-2xl font-bold mb-12">登録完了！</h1>
-        <Link
-          href="/kaiwa/select"
-          className="w-full max-w-[430px] py-4 bg-[#F4A261] rounded-full text-white text-center text-base hover:bg-opacity-90 transition-colors"
-        >
-          会話の練習を始める
-        </Link>
+        <div className="max-w-[430px] w-full text-center">
+          <h1 className="text-2xl font-bold mb-4">
+            登録が完了しました！
+          </h1>
+          <p className="text-gray-300 mb-8">
+            お相手の情報が登録されました。<br />
+            会話の練習を始めましょう。
+          </p>
+          <Link
+            href="/kaiwa/select"
+            className="block w-full py-4 bg-[#F4A261] rounded-full text-white text-base hover:bg-opacity-90 transition-colors"
+          >
+            会話の練習を始める
+          </Link>
+        </div>
       </main>
 
       {/* フッターナビゲーション */}
